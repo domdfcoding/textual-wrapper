@@ -1,0 +1,27 @@
+# Configuration for 'repo_helper' (https://github.com/repo-helper/repo_helper)
+---
+modname: 'textual-wrapper'
+copyright_years: '2026'
+author: 'Dominic Davis-Foster'
+email: 'dominic@davis-foster.co.uk'
+username: 'domdfcoding'
+version: '0.0.0'
+license: 'MIT'
+short_desc: 'GUI window wrapper around a Textual app (or any other terminal program).'
+
+enable_conda: false
+enable_docs: false
+enable_tests: false
+use_whey: true
+
+python_versions:
+  '3.10':
+  '3.11':
+  '3.12':
+
+extras_require:
+ gtk:
+  - pygobject==3.50.0
+
+additional_ignore:
+  - "*.so*"
