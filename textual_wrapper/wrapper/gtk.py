@@ -68,7 +68,7 @@ class Terminal(Vte.Terminal):
 		Create the terminal widget.
 		"""
 
-		self = Terminal()
+		self = cls()
 		self.set_mouse_autohide(True)
 		self.set_scroll_on_output(False)
 		self.set_audible_bell(False)
