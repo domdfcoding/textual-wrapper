@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+
+# This file is managed by 'repo_helper'. Don't edit it directly.
+
+# stdlib
+import os
+import re
+import sys
+
+
+# 3rd party
+import sphinx.ext.autodoc
+from sphinx.application import Sphinx
+
+# this package
+from sphinx_toolbox.more_autodoc.variables import VariableDocumenter
+from sphinx_toolbox.utils import flag
+
+
+# 3rd party
+from sphinx_pyproject import SphinxConfig
+
+sys.path.append('.')
+
+config = SphinxConfig(globalns=globals())
+project = config["project"]
+author = config["author"]
+documentation_summary = config.description
+
+github_url = "https://github.com/{github_username}/{github_repository}".format_map(config)
+
+rst_prolog = f""".. |pkgname| replace:: textual-wrapper
+.. |pkgname2| replace:: ``textual-wrapper``
+.. |browse_github| replace:: `Browse the GitHub Repository <{github_url}>`__
+"""
+
+slug = re.sub(r'\W+', '-', project.lower())
+release = version = config.version
+
+sphinx_builder = os.environ.get("SPHINX_BUILDER", "html").lower()
+todo_include_todos = int(os.environ.get("SHOW_TODOS", 0)) and sphinx_builder != "latex"
+
+intersphinx_mapping = {
+		"python": ("https://docs.python.org/3/", None),
+		"sphinx": ("https://www.sphinx-doc.org/en/stable/", None),
+		}
+
+html_theme_options = {"logo_only": False}
+
+html_context = {
+		"display_github": True,
+		"github_user": "domdfcoding",
+		"github_repo": "textual-wrapper",
+		"github_version": "master",
+		"conf_py_path": "/doc-source/",
+		}
+htmlhelp_basename = slug
+
+latex_documents = [("index", f'{slug}.tex', project, author, "manual")]
+man_pages = [("index", slug, project, [author], 1)]
+texinfo_documents = [("index", slug, project, author, slug, project, "Miscellaneous")]
+
+toctree_plus_types = set(config["toctree_plus_types"])
+
+autodoc_default_options = {
+		"members": None,  # Include all members (methods).
+		"special-members": None,
+		"autosummary": None,
+		"show-inheritance": None,
+		"exclude-members": ','.join(config["autodoc_exclude_members"]),
+		}
+
+latex_elements = {
+		"printindex": "\\begin{flushleft}\n\\printindex\n\\end{flushleft}",
+		"tableofcontents": "\\pdfbookmark[0]{\\contentsname}{toc}\\sphinxtableofcontents",
+		}
+
+
+# Fix for pathlib issue with sphinxemoji on Python 3.9 and Sphinx 4.x
+def copy_asset_files(app, exc):
+	# 3rd party
+	from domdf_python_tools.compat import importlib_resources
+	from sphinx.util.fileutil import copy_asset
+
+	if exc:
+		return
+
+	asset_files = ["twemoji.js", "twemoji.css"]
+	for path in asset_files:
+		path_str = os.fspath(importlib_resources.files("sphinxemoji") / path)
+		copy_asset(path_str, os.path.join(app.outdir, "_static"))
+
+
+def autovariable_add_nodocstring(app: Sphinx) -> None:
+	"""
+	Add the ``:no-docstring:`` option to autovariable directives.
+
+	The option is used to exclude the docstring from the output
+
+	:param app: The Sphinx application.
+	"""
+
+	VariableDocumenter.option_spec["no-docstring"] = flag
+
+	app.setup_extension("sphinx.ext.autodoc")
+	app.connect("autodoc-process-docstring", no_docstring_process_docstring, priority=1000)
+
+
+
+def no_docstring_process_docstring(  # noqa: MAN001
+		app: Sphinx,
+		what,
+		name: str,
+		obj,
+		options,
+		lines: list[str],
+		) -> None:
+	"""
+	Remove module docstrings if the ``:no-docstring:`` flag was set.
+
+	:param app: The Sphinx application.
+	:param what:
+	:param name: The name of the object being documented.
+	:param obj: The object being documented.
+	:param options: Mapping of autodoc options to values.
+	:param lines: List of strings representing the current contents of the docstring.
+	"""
+
+	# if isinstance(obj, ModuleType):
+	no_docstring = options.get("no-docstring", False)
+	if no_docstring:
+		lines.clear()
+
+
+
+
+def setup(app):
+	# 3rd party
+	from sphinx_toolbox.latex import better_header_layout
+	from sphinxemoji import sphinxemoji
+
+
+	autovariable_add_nodocstring(app)
+
+	app.connect("config-inited", lambda app, config: better_header_layout(config))
+	app.connect("build-finished", copy_asset_files)
+	app.add_js_file("https://unpkg.com/twemoji@latest/dist/twemoji.min.js")
+	app.add_js_file("twemoji.js")
+	app.add_css_file("twemoji.css")
+	app.add_transform(sphinxemoji.EmojiSubstitutions)

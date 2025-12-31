@@ -10,9 +10,9 @@ license: 'MIT'
 short_desc: 'GUI window wrapper around a Textual app (or any other terminal program).'
 
 enable_conda: false
-enable_docs: false
 enable_tests: false
 use_whey: true
+tox_testenv_extras: all
 
 python_versions:
   '3.10':
