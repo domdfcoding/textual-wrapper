@@ -169,7 +169,7 @@ class WrapperWindow(Gtk.Window):
 		box.pack_start(menubar, False, True, 0)
 		box.add(MainWindow().add_widget(cast(Gtk.Widget, self.terminal)))
 
-		self.set_window_size(805, 600)
+		self.set_window_size((805, 600))
 		self.set_border_width(0)
 		self.set_wmclass(wrapper.name.lower(), wrapper.name)
 
