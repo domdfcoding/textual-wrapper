@@ -58,7 +58,7 @@ class Wrapper(ABC):
 	#: The executable and command line arguments.
 	arguments: list[str]
 
-	#: Optional icon filename (absolute path).
+	#: Optional icon filename.
 	icon: str | None = None
 
 	#: List of right click options for the launcher/taskbar icon.

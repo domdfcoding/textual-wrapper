@@ -25,3 +25,13 @@ extras_require:
 
 additional_ignore:
   - "*.so*"
+
+extra_sphinx_extensions:
+  - ignore_missing_xref
+  - variable_no_docstring
+
+sphinx_conf_epilogue:
+  - "nitpicky = True"
+
+exclude_files:
+  - rtfd

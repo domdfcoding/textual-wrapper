@@ -7,16 +7,6 @@ import os
 import re
 import sys
 
-
-# 3rd party
-import sphinx.ext.autodoc
-from sphinx.application import Sphinx
-
-# this package
-from sphinx_toolbox.more_autodoc.variables import VariableDocumenter
-from sphinx_toolbox.utils import flag
-
-
 # 3rd party
 from sphinx_pyproject import SphinxConfig
 
@@ -91,56 +81,10 @@ def copy_asset_files(app, exc):
 		copy_asset(path_str, os.path.join(app.outdir, "_static"))
 
 
-def autovariable_add_nodocstring(app: Sphinx) -> None:
-	"""
-	Add the ``:no-docstring:`` option to autovariable directives.
-
-	The option is used to exclude the docstring from the output
-
-	:param app: The Sphinx application.
-	"""
-
-	VariableDocumenter.option_spec["no-docstring"] = flag
-
-	app.setup_extension("sphinx.ext.autodoc")
-	app.connect("autodoc-process-docstring", no_docstring_process_docstring, priority=1000)
-
-
-
-def no_docstring_process_docstring(  # noqa: MAN001
-		app: Sphinx,
-		what,
-		name: str,
-		obj,
-		options,
-		lines: list[str],
-		) -> None:
-	"""
-	Remove module docstrings if the ``:no-docstring:`` flag was set.
-
-	:param app: The Sphinx application.
-	:param what:
-	:param name: The name of the object being documented.
-	:param obj: The object being documented.
-	:param options: Mapping of autodoc options to values.
-	:param lines: List of strings representing the current contents of the docstring.
-	"""
-
-	# if isinstance(obj, ModuleType):
-	no_docstring = options.get("no-docstring", False)
-	if no_docstring:
-		lines.clear()
-
-
-
-
 def setup(app):
 	# 3rd party
 	from sphinx_toolbox.latex import better_header_layout
 	from sphinxemoji import sphinxemoji
-
-
-	autovariable_add_nodocstring(app)
 
 	app.connect("config-inited", lambda app, config: better_header_layout(config))
 	app.connect("build-finished", copy_asset_files)
@@ -148,3 +92,6 @@ def setup(app):
 	app.add_js_file("twemoji.js")
 	app.add_css_file("twemoji.css")
 	app.add_transform(sphinxemoji.EmojiSubstitutions)
+
+
+nitpicky = True
