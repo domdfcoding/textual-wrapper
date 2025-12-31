@@ -131,6 +131,10 @@ class MainWindow(Gtk.ScrolledWindow):
 		Add a widget to the window.
 
 		:param widget:
+
+		:rtype:
+
+		.. latex:clearpage::
 		"""
 
 		Gtk.Container.add(self, widget)
@@ -295,6 +299,8 @@ class WrapperGtk(Wrapper):
 	def run(self) -> None:
 		"""
 		Launch the wrapper.
+
+		.. latex:clearpage::
 		"""
 
 		window = WrapperWindow(self)

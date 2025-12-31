@@ -8,6 +8,10 @@
 Functions Keys
 ^^^^^^^^^^^^^^
 
+.. raw:: latex
+
+	\begin{multicols}{4}
+
 .. autovariable:: textual_wrapper.keycodes.F1
 	:no-value:
 	:no-docstring:
@@ -56,10 +60,17 @@ Functions Keys
 	:no-value:
 	:no-docstring:
 
+.. raw:: latex
+
+	\end{multicols}
 
 
 Ctrl key +
 ^^^^^^^^^^^^^^
+
+.. raw:: latex
+
+	\begin{multicols}{4}
 
 .. autovariable:: CTRL_AT
 	:no-value:
@@ -188,3 +199,7 @@ Ctrl key +
 .. autovariable:: CTRL__
 	:no-value:
 	:no-docstring:
+
+.. raw:: latex
+
+	\end{multicols}

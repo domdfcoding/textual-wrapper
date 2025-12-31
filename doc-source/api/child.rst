@@ -3,3 +3,5 @@
 ================================
 
 .. automodule:: textual_wrapper.child
+
+.. latex:clearpage::
