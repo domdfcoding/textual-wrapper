@@ -40,16 +40,14 @@ from typing import Any, cast
 import gi  # nodep
 
 # this package
-from textual_wrapper.wrapper import MenuOption, Wrapper
+from textual_wrapper.types import MenuOption, Wrapper
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("Vte", "2.91")  # vte-0.38 (gnome-3.14)
-gi.require_version("Unity", "7.0")
-gi.require_version("Dbusmenu", "0.4")
 
 # 3rd party
-from gi.repository import Dbusmenu, Gdk, Gio, GLib, Gtk, Unity, Vte  # nodep  # noqa: E402
+from gi.repository import Gdk, Gio, GLib, Gtk, Vte  # nodep  # noqa: E402
 
 __all__ = ["MainWindow", "Terminal", "WrapperGtk", "WrapperWindow"]
 
@@ -224,21 +222,6 @@ class WrapperWindow(Gtk.Window):
 		keypress = self.menu_options[item]
 		self.terminal.feed_child(keypress)
 
-	def on_launcher_menuitem_clicked(self, item: Dbusmenu.Menuitem, timestamp: int) -> None:
-		"""
-		Handler for a Unity Launcher rightclick menu item being clicked.
-
-		:param item: The clicked item.
-		:param timestamp:
-		"""
-
-		action = item.property_get(Dbusmenu.MENUITEM_PROP_LABEL)
-
-		keypress = self.launcher_options[action]
-		self.terminal.feed_child(keypress)
-		# self.terminal.feed_child(b"\x10")  # Ctrl+p
-		# self.terminal.feed_child(b"\x1b[21~")  # F10
-
 	def create_menu_options(self, menu_options: dict[str, list[MenuOption]]) -> Gtk.MenuBar:
 		"""
 		Create the menubar options.
@@ -262,25 +245,6 @@ class WrapperWindow(Gtk.Window):
 			menubar.append(menuitem)
 
 		return menubar
-
-	def create_launcher_options(self) -> None:
-		"""
-		Create the Unity launcher rightclick menu options.
-		"""
-
-		# TODO: gate on desktop file existing and us launching in way to use it (no spaces in install path)
-		launcher = Unity.LauncherEntry.get_for_desktop_id("radioport.desktop")
-
-		ql = Dbusmenu.Menuitem.new()
-
-		for option in self.launcher_options:
-			menuitem = Dbusmenu.Menuitem.new()
-			menuitem.property_set(Dbusmenu.MENUITEM_PROP_LABEL, option)
-			menuitem.property_set_bool(Dbusmenu.MENUITEM_PROP_VISIBLE, True)
-			menuitem.connect(Dbusmenu.MENUITEM_SIGNAL_ITEM_ACTIVATED, self.on_launcher_menuitem_clicked)
-			ql.child_append(menuitem)
-
-		launcher.set_property("quicklist", ql)
 
 	def on_child_exited(self, terminal: Vte.Terminal, status: int) -> None:
 		"""
@@ -315,7 +279,6 @@ class WrapperWindow(Gtk.Window):
 				)
 		self.connect("destroy", Gtk.main_quit)
 		self.show_all()
-		self.create_launcher_options()
 
 		try:
 			Gtk.main()

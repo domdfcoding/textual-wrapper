@@ -27,69 +27,23 @@ Wrappers.
 #
 
 # stdlib
-from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
-from typing import NamedTuple
+import os
+import platform
 
-__all__ = ["MenuOption", "Wrapper"]
+# this package
+from textual_wrapper import types
 
+__all__ = ("Wrapper", )
 
-class MenuOption(NamedTuple):
-	"""
-	An option in the menubar or the right click menu of the launcher/taskbar icon.
-	"""
+Wrapper: type[types.Wrapper]
 
-	#: Label for the option.
-	label: str
+if platform.system() == "Linux":
+	if "unity" in os.getenv("XDG_CURRENT_DESKTOP", ''):
+		# this package
+		from textual_wrapper.wrapper.unity import WrapperUnity as Wrapper
+	else:
+		# this package
+		from textual_wrapper.wrapper.gtk import WrapperGtk as Wrapper
 
-	#: The keypress(es) to send to the terminal app.
-	keypress: str
-
-
-@dataclass
-class Wrapper(ABC):
-	"""
-	A wrapper around a terminal app.
-	"""
-
-	#: The name of the application.
-	name: str
-
-	#: The executable and command line arguments.
-	arguments: list[str]
-
-	#: Optional icon filename (absolute path).
-	icon: str | None = None
-
-	#: List of right click options for the launcher/taskbar icon.
-	launcher_options: list[MenuOption] = field(default_factory=list)
-
-	#: Options for the menubar.
-	menu_options: dict[str, list[MenuOption]] = field(default_factory=dict)
-
-	def add_launcher_option(self, option: MenuOption) -> None:
-		"""
-		Add an option to the launcher/taskbar icon.
-
-		:param option:
-		"""
-
-		self.launcher_options.append(option)
-
-	def add_menu_option(self, option: MenuOption, group: str = "File") -> None:
-		"""
-		Add an option to the menubar at the top of the window.
-
-		:param option:
-		:param group: The top level button, e.g. ``File``, ``Edit``, ``Help``.
-		"""
-
-		self.menu_options.setdefault(group, []).append(option)
-
-	@abstractmethod
-	def run(self) -> None:
-		"""
-		Launch the wrapper.
-		"""
-
-		raise NotImplementedError
+else:
+	raise NotImplementedError("No supported wrapper for this platform or desktop environment.")
