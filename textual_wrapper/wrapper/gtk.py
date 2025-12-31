@@ -170,17 +170,31 @@ class WrapperWindow(Gtk.Window):
 		box.pack_start(menubar, False, True, 0)
 		box.add(MainWindow().add_widget(cast(Gtk.Widget, self.terminal)))
 
-		char_width, char_height = self.terminal.get_char_width(), self.terminal.get_char_height()
-		width, height = 805, 600
-		width = (width // char_width) * char_width + 2
-		height = (height // char_height) * char_height + 2
-
-		self.set_default_size(width, height)
+		self.set_window_size(805, 600)
 		self.set_border_width(0)
 		self.set_wmclass(wrapper.name.lower(), wrapper.name)
 
 		if wrapper.icon:
 			self.set_icon_from_file(wrapper.icon)
+
+	def set_window_size(self, target_size: tuple[int, int]) -> tuple[int, int]:
+		"""
+		Set the window size to the closest whole-character increment.
+
+		:param target_size: The desired size.
+
+		:returns: The actual size of the window.
+		"""
+
+		border_size = 1
+		char_width, char_height = self.terminal.get_char_width(), self.terminal.get_char_height()
+		width, height = target_size
+		width = (width // char_width) * char_width + border_size + border_size
+		height = (height // char_height) * char_height + border_size + border_size
+
+		self.set_default_size(width, height)
+
+		return width, height
 
 	def spawn_callback(self, terminal: Vte.Terminal, pid: int, error: Any | None) -> None:
 		"""
