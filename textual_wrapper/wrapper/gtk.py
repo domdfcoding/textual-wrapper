@@ -38,7 +38,6 @@ from typing import Any, cast
 
 # 3rd party
 import gi  # nodep
-from domdf_python_tools.paths import PathPlus
 
 # this package
 from textual_wrapper.wrapper import MenuOption, Wrapper
@@ -336,4 +335,4 @@ class WrapperGtk(Wrapper):
 		"""
 
 		window = WrapperWindow(self)
-		window.run(self.arguments)
+		window.run(self.arguments, working_directory=os.getcwd())
