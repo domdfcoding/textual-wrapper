@@ -18,7 +18,7 @@ textual-wrapper
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |actions_linux| |actions_windows| |actions_macos|
+	  - |actions_linux|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Activity
@@ -39,14 +39,6 @@ textual-wrapper
 .. |actions_linux| image:: https://github.com/domdfcoding/textual-wrapper/workflows/Linux/badge.svg
 	:target: https://github.com/domdfcoding/textual-wrapper/actions?query=workflow%3A%22Linux%22
 	:alt: Linux Test Status
-
-.. |actions_windows| image:: https://github.com/domdfcoding/textual-wrapper/workflows/Windows/badge.svg
-	:target: https://github.com/domdfcoding/textual-wrapper/actions?query=workflow%3A%22Windows%22
-	:alt: Windows Test Status
-
-.. |actions_macos| image:: https://github.com/domdfcoding/textual-wrapper/workflows/macOS/badge.svg
-	:target: https://github.com/domdfcoding/textual-wrapper/actions?query=workflow%3A%22macOS%22
-	:alt: macOS Test Status
 
 .. |actions_flake8| image:: https://github.com/domdfcoding/textual-wrapper/workflows/Flake8/badge.svg
 	:target: https://github.com/domdfcoding/textual-wrapper/actions?query=workflow%3A%22Flake8%22

@@ -20,7 +20,7 @@ textual-wrapper
 		* - Docs
 		  - |docs| |docs_check|
 		* - Tests
-		  - |actions_linux| |actions_windows| |actions_macos|
+		  - |actions_linux|
 		* - PyPI
 		  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 		* - Activity
@@ -41,14 +41,6 @@ textual-wrapper
 	.. |actions_linux| actions-shield::
 		:workflow: Linux
 		:alt: Linux Test Status
-
-	.. |actions_windows| actions-shield::
-		:workflow: Windows
-		:alt: Windows Test Status
-
-	.. |actions_macos| actions-shield::
-		:workflow: macOS
-		:alt: macOS Test Status
 
 	.. |actions_flake8| actions-shield::
 		:workflow: Flake8

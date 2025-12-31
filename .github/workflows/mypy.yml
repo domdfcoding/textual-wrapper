@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        os: ['ubuntu-22.04', 'windows-2022']
+        os: ['ubuntu-22.04']
       fail-fast: false
 
     steps:
@@ -42,8 +42,7 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install dependencies (Linux) 🔧
-        if: ${{ matrix.os == 'ubuntu-22.04' && steps.changes.outputs.code == 'true' }}
+      - name: Install dependencies 🔧
         run: |
           python -VV
           python -m site
@@ -51,14 +50,6 @@ jobs:
           python -m pip install --upgrade tox~=3.0 virtualenv!=20.16.0
           sudo apt update
           sudo apt install libgirepository1.0-dev libgtk-3-dev
-
-      - name: Install dependencies (Windows) 🔧
-        if: ${{ matrix.os != 'ubuntu-22.04' && steps.changes.outputs.code == 'true' }}
-        run: |
-          python -VV
-          python -m site
-          python -m pip install --upgrade pip setuptools wheel
-          python -m pip install --upgrade tox~=3.0 virtualenv!=20.16.0
 
       - name: "Run mypy"
         if: steps.changes.outputs.code == 'true'

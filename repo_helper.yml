@@ -19,6 +19,9 @@ python_versions:
   '3.11':
   '3.12':
 
+platforms:
+  - Linux
+
 extras_require:
  gtk:
   - pygobject==3.50.0

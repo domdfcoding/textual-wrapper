@@ -31,7 +31,7 @@ all = [ "pygobject==3.50.0",]
 base-classifiers = [ "Typing :: Typed",]
 python-versions = [ "3.10", "3.11", "3.12",]
 python-implementations = [ "CPython",]
-platforms = [ "Windows", "macOS", "Linux",]
+platforms = [ "Linux",]
 license-key = "MIT"
 package = "textual_wrapper"
 
