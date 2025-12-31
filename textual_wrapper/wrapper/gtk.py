@@ -96,7 +96,7 @@ class Terminal(Vte.Terminal):
 		terminal_pty = self.get_pty()
 		fd = cast(Gio.Cancellable, Vte.Pty.get_fd(terminal_pty))
 
-		env = ["TEXTUAL_WRAPPER=1", f"TEXTUAL_WRAPPER_PPID={os.getpid()}"]
+		env = ["TEXTUAL_WRAPPER=1", f"TEXTUAL_WRAPPER_PID={os.getpid()}"]
 		if self.can_use_sixel:
 			env.append("TEXTUAL_WRAPPER_SIXEL=1")
 

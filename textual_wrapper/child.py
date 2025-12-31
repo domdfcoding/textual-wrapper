@@ -65,6 +65,6 @@ class ChildHelper(NamedTuple):
 
 		is_wrapper = bool(_env_get_int("TEXTUAL_WRAPPER", 0))
 		sixel_supported = bool(_env_get_int("TEXTUAL_WRAPPER_SIXEL", 0))
-		parent_pid = _env_get_int("TEXTUAL_WRAPPER_PPID", -1)
+		parent_pid = _env_get_int("TEXTUAL_WRAPPER_PID", -1)
 
 		return cls(is_wrapper=is_wrapper, parent_pid=parent_pid, sixel_supported=sixel_supported)
