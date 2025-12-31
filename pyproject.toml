@@ -36,6 +36,15 @@ license-key = "MIT"
 package = "textual_wrapper"
 
 [tool.importcheck]
+always = [
+    "textual_wrapper",
+    "textual_wrapper.child",
+    "textual_wrapper.keycodes",
+    "textual_wrapper.types",
+    "textual_wrapper.wrapper.gtk",
+    "textual_wrapper.wrapper.unity",
+    "textual_wrapper.wrapper",
+]
 
 [tool.mypy]
 python_version = "3.10"
