@@ -84,12 +84,14 @@ class Terminal(Vte.Terminal):
 	def spawn_app(
 			self,
 			arguments: list[str],
+			working_directory: str,
 			callback: Callable[["Terminal", int, Any], None] | None = None,
 			) -> None:
 		"""
 		Launch the app in the terminal.
 
 		:param arguments: The app executable and any arguments to pass to it.
+		:param working_directory: Directory to execute the application in.
 		:param callback: Function to call when the app has launched, which is passed the terminal, the child process id, and any errors.
 		"""
 
@@ -105,7 +107,7 @@ class Terminal(Vte.Terminal):
 
 		self.spawn_async(
 				Vte.PtyFlags.DEFAULT,
-				PathPlus(__file__).parent.parent.abspath().as_posix(),  # Working directory
+				working_directory,
 				arguments,
 				env,
 				GLib.SpawnFlags.DO_NOT_REAP_CHILD,
@@ -281,14 +283,23 @@ class WrapperWindow(Gtk.Window):
 		# print(f"{status=}")
 		sys.exit(status)
 
-	def run(self, arguments: list[str]) -> None:
+	def run(
+			self,
+			arguments: list[str],
+			working_directory: str,
+			) -> None:
 		"""
 		Show the wrapper window and launch the Textual app.
 
 		:param arguments: The app executable and any arguments to pass to it.
+		:param working_directory: Directory to execute the application in.
 		"""
 
-		self.terminal.spawn_app(arguments=arguments, callback=self.spawn_callback)
+		self.terminal.spawn_app(
+				arguments=arguments,
+				working_directory=working_directory,
+				callback=self.spawn_callback,
+				)
 		self.connect("destroy", Gtk.main_quit)
 		self.show_all()
 		self.create_launcher_options()
