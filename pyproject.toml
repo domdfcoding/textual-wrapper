@@ -42,7 +42,6 @@ always = [
     "textual_wrapper.keycodes",
     "textual_wrapper.types",
     "textual_wrapper.wrapper.gtk",
-    "textual_wrapper.wrapper.unity",
     "textual_wrapper.wrapper",
 ]
 
