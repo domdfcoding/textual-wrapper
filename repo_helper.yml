@@ -35,6 +35,7 @@ sphinx_conf_epilogue:
 
 exclude_files:
   - rtfd
+  - license_rst
 
 tox_unmanaged:
   - testenv
