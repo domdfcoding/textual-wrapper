@@ -29,21 +29,23 @@ Wrappers.
 # stdlib
 import os
 import platform
-
-# this package
-from textual_wrapper import types
+from typing import TYPE_CHECKING
 
 __all__ = ("Wrapper", )
 
-Wrapper: type[types.Wrapper]
+if TYPE_CHECKING:
 
-if platform.system() == "Linux":
-	if "unity" in os.getenv("XDG_CURRENT_DESKTOP", '').lower():
-		# this package
-		from textual_wrapper.wrapper.unity import WrapperUnity as Wrapper
-	else:
-		# this package
-		from textual_wrapper.wrapper.gtk import WrapperGtk as Wrapper
+	# this package
+	from textual_wrapper.types import Wrapper as Wrapper
 
 else:
-	raise NotImplementedError("No supported wrapper for this platform or desktop environment.")
+	if platform.system() == "Linux":
+		if "unity" in os.getenv("XDG_CURRENT_DESKTOP", '').lower():
+			# this package
+			from textual_wrapper.wrapper.unity import WrapperUnity as Wrapper
+		else:
+			# this package
+			from textual_wrapper.wrapper.gtk import WrapperGtk as Wrapper
+
+	else:
+		raise NotImplementedError("No supported wrapper for this platform or desktop environment.")

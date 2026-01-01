@@ -14,6 +14,10 @@ enable_tests: false
 use_whey: true
 tox_testenv_extras: all
 
+extra_lint_paths:
+ - test_subclassing.py
+
+
 python_versions:
   '3.10':
   '3.11':
