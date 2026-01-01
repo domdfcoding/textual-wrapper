@@ -79,7 +79,7 @@ textual-wrapper
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/textual-wrapper
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/textual-wrapper/v0.0.0
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/textual-wrapper/v0.1.0
 	:target: https://github.com/domdfcoding/textual-wrapper/pulse
 	:alt: GitHub commits since tagged version
 
