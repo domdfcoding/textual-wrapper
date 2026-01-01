@@ -27,8 +27,10 @@ Base classes for the wrapper.
 #
 
 # stdlib
+import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import NamedTuple
 
 __all__ = ["MenuOption", "Wrapper"]
@@ -87,9 +89,11 @@ class Wrapper(ABC):
 		self.menu_options.setdefault(group, []).append(option)
 
 	@abstractmethod
-	def run(self) -> None:
+	def run(self, working_directory: str | Path | os.PathLike | None = None) -> None:
 		"""
 		Launch the wrapper.
+
+		:param working_directory: Directory to execute the application in.
 		"""
 
 		raise NotImplementedError

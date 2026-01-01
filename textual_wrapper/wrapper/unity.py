@@ -30,7 +30,6 @@ GTK wrapper with Unity launcher support.
 #
 
 # stdlib
-import os
 import sys
 from dataclasses import dataclass
 
@@ -38,7 +37,6 @@ from dataclasses import dataclass
 import gi  # nodep
 
 # this package
-from textual_wrapper.types import Wrapper
 from textual_wrapper.wrapper import gtk
 
 gi.require_version("Gtk", "3.0")
@@ -124,15 +122,9 @@ class WrapperWindow(gtk.WrapperWindow):
 
 
 @dataclass
-class WrapperUnity(Wrapper):
+class WrapperUnity(gtk.WrapperGtk):
 	"""
 	A GTK3-based wrapper around a terminal app, with Unity launcher support.
 	"""
 
-	def run(self) -> None:
-		"""
-		Launch the wrapper.
-		"""
-
-		window = WrapperWindow(self)
-		window.run(self.arguments, working_directory=os.getcwd())
+	wrapper_window_cls = WrapperWindow

@@ -34,6 +34,7 @@ import os
 import sys
 from collections.abc import Callable
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, cast
 
 # 3rd party
@@ -296,12 +297,17 @@ class WrapperGtk(Wrapper):
 	A GTK3-based wrapper around a terminal app.
 	"""
 
-	def run(self) -> None:
+	wrapper_window_cls: type[WrapperWindow] = WrapperWindow
+
+	def run(self, working_directory: str | Path | os.PathLike | None = None) -> None:
 		"""
 		Launch the wrapper.
 
-		.. latex:clearpage::
+		:param working_directory: Directory to execute the application in.
 		"""
 
-		window = WrapperWindow(self)
-		window.run(self.arguments, working_directory=os.getcwd())
+		if not working_directory:
+			working_directory = os.getcwd()
+
+		window = self.wrapper_window_cls(self)
+		window.run(self.arguments, os.fspath(working_directory))
