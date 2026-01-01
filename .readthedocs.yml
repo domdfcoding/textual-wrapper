@@ -18,6 +18,13 @@ build:
     python: '3.10'
   apt_packages:
    - libgirepository1.0-dev
+   - libgtk-3-dev
+   - libvte-2.91-0
+   - gir1.2-vte-2.91
+   - libdbusmenu-glib4
+   - gir1.2-dbusmenu-glib-0.4
+   - libunity9
+   - gir1.2-unity-5.0
   jobs:
     post_create_environment:
      - pip install .[all]
