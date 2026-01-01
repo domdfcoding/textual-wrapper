@@ -42,4 +42,4 @@ if "unity" in os.getenv("XDG_CURRENT_DESKTOP", '').lower():
 
 	# this package
 	from .unity import WrapperUnity as WrapperGtk
-	from .unity import WrapperWindow
+	from .unity import WrapperWindowUnity as WrapperWindow
