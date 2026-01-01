@@ -25,7 +25,7 @@ jobs:
         with:
           pre-build-command: |
             python -m pip install tox
-            sudo apt update
-            sudo apt install libgirepository1.0-dev libgtk-3-dev libvte-2.91-0 gir1.2-vte-2.91
+            apt update
+            apt install libgirepository1.0-dev libgtk-3-dev libvte-2.91-0 gir1.2-vte-2.91
           docs-folder: "doc-source/"
           build-command: "tox -e docs -- "
