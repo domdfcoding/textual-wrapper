@@ -3,9 +3,6 @@
 #  unity.py
 """
 GTK wrapper with Unity launcher support.
-
-.. extras-require:: gtk
-	:pyproject:
 """
 #
 #  Copyright © 2026 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -37,20 +34,19 @@ from dataclasses import dataclass
 import gi  # nodep
 
 # this package
-from textual_wrapper.wrapper import gtk
+from .base import WrapperGtk, WrapperWindow
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Unity", "7.0")
 gi.require_version("Dbusmenu", "0.4")
 
 # 3rd party
-from gi.repository import Gtk  # nodep  # noqa: E402
-from gi.repository import Dbusmenu, Unity  # nodep  # noqa: E402
+from gi.repository import Dbusmenu, Gtk, Unity  # nodep  # noqa: E402
 
-__all__ = ["WrapperUnity", "WrapperWindow"]
+__all__ = ["WrapperUnity", "WrapperWindowUnity"]
 
 
-class WrapperWindow(gtk.WrapperWindow):
+class WrapperWindowUnity(WrapperWindow):
 	"""
 	Standalone terminal wrapper for the app.
 
@@ -122,9 +118,10 @@ class WrapperWindow(gtk.WrapperWindow):
 
 
 @dataclass
-class WrapperUnity(gtk.WrapperGtk):
+class WrapperUnity(WrapperGtk):
 	"""
 	A GTK3-based wrapper around a terminal app, with Unity launcher support.
 	"""
 
-	wrapper_window_cls = WrapperWindow
+	#: The GTK wrapper window itself.
+	wrapper_window_cls = WrapperWindowUnity

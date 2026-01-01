@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 #
-#  gtk.py
+#  base.py
 """
-GTK wrapper.
-
-.. extras-require:: gtk
-	:pyproject:
+GTK wrapper (base implementation).
 """
 #
 #  Copyright © 2026 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -297,6 +294,7 @@ class WrapperGtk(Wrapper):
 	A GTK3-based wrapper around a terminal app.
 	"""
 
+	#: The GTK wrapper window itself.
 	wrapper_window_cls: type[WrapperWindow] = WrapperWindow
 
 	def run(self, working_directory: str | Path | os.PathLike | None = None) -> None:

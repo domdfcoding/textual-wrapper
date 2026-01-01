@@ -2,7 +2,10 @@
 #
 #  __init__.py
 """
-Wrappers.
+GTK wrapper.
+
+.. extras-require:: gtk
+	:pyproject:
 """
 #
 #  Copyright © 2026 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -27,21 +30,16 @@ Wrappers.
 #
 
 # stdlib
-import platform
-from typing import TYPE_CHECKING
+import os
 
-__all__ = ("Wrapper", )
+__all__ = ["MainWindow", "Terminal", "WrapperGtk", "WrapperWindow"]
 
-if TYPE_CHECKING:
+# this package
+from .base import MainWindow, Terminal, WrapperGtk, WrapperWindow
+
+if "unity" in os.getenv("XDG_CURRENT_DESKTOP", '').lower():
+	# Use Unity-specific version if supported.
 
 	# this package
-	from textual_wrapper.types import Wrapper as Wrapper
-
-else:
-	if platform.system() == "Linux":
-
-		# this package
-		from textual_wrapper.wrapper.gtk import WrapperGtk as Wrapper
-
-	else:
-		raise NotImplementedError("No supported wrapper for this platform or desktop environment.")
+	from .unity import WrapperUnity as WrapperGtk
+	from .unity import WrapperWindow
