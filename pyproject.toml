@@ -4,7 +4,7 @@ build-backend = "whey"
 
 [project]
 name = "textual-wrapper"
-version = "0.3.0"
+version = "0.3.1"
 description = "GUI window wrapper around a Textual app (or any other terminal program)."
 readme = "README.rst"
 keywords = []
