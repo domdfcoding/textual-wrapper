@@ -38,7 +38,7 @@ __all__ = ("Wrapper", )
 Wrapper: type[types.Wrapper]
 
 if platform.system() == "Linux":
-	if "unity" in os.getenv("XDG_CURRENT_DESKTOP", ''):
+	if "unity" in os.getenv("XDG_CURRENT_DESKTOP", '').lower():
 		# this package
 		from textual_wrapper.wrapper.unity import WrapperUnity as Wrapper
 	else:
