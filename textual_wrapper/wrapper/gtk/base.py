@@ -100,12 +100,19 @@ class Terminal(Vte.Terminal):
 		# Ensures they are ignored if set by the terminal we're invoked from
 		env.extend(("COLUMNS=-1", "LINES=-1"))
 
+		# On VTE 0.61.90 and layer DO_NOT_REAP_CHILD can be omitted (and a warning is omitted otherwise) but must be there on older versions.
+		assert Vte.get_major_version() == 0
+		if (Vte.get_minor_version(), Vte.get_micro_version()) >= (61, 90):
+			flags = GLib.SpawnFlags(0)
+		else:
+			flags = GLib.SpawnFlags.DO_NOT_REAP_CHILD
+
 		self.spawn_async(
 				Vte.PtyFlags.DEFAULT,
 				working_directory,
 				arguments,
 				env,
-				GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+				flags,
 				None,
 				-1,
 				fd,
