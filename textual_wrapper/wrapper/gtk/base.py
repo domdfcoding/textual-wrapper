@@ -123,7 +123,7 @@ class Terminal(Vte.Terminal):
 	@background_colour.setter
 	def background_colour(self, colour: Gdk.RGBA) -> None:
 		self._background_colour = colour
-		self.terminal.set_color_background(colour)
+		self.set_color_background(colour)
 
 	def spawn_app(
 			self,
