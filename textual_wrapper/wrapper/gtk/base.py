@@ -76,6 +76,55 @@ class Terminal(Vte.Terminal):
 
 		return self
 
+	_background_colour: Gdk.RGBA
+
+	def set_color_background(self, background: Gdk.RGBA) -> None:
+		"""
+		Sets the background colour for text which does not have a specific background colour assigned.
+
+		Only has effect when no background image is set and when the terminal is not transparent.
+
+		:param background: The new background colour
+
+		:rtype:
+
+		.. versionadded:: 0.4.0
+		"""
+
+		self._background_colour = background
+		super().set_color_background(background)
+
+	def get_color_background(self) -> Gdk.RGBA:
+		"""
+		Returns the background colour for text which does not have a specific background colour assigned.
+
+		.. versionadded:: 0.4.0
+		"""
+
+		return self._background_colour
+
+	def hide_cursor(self) -> None:
+		"""
+		Hide the blinking cursor by setting its foreground colour to the background colour.
+
+		.. versionadded:: 0.4.0
+		"""
+
+		self.set_color_cursor_foreground(self._background_colour)
+
+	@property
+	def background_colour(self) -> Gdk.RGBA:
+		"""
+		Colour to use for the terminal background.
+		"""
+
+		return self._background_colour
+
+	@background_colour.setter
+	def background_colour(self, colour: Gdk.RGBA) -> None:
+		self._background_colour = colour
+		self.terminal.set_color_background(colour)
+
 	def spawn_app(
 			self,
 			arguments: list[str],
