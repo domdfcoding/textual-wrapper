@@ -91,7 +91,7 @@ textual-wrapper
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/textual-wrapper
-	:target: https://pypi.org/project/textual-wrapper/
+	:target: https://pypistats.org/packages/textual-wrapper
 	:alt: PyPI - Downloads
 
 .. end shields
